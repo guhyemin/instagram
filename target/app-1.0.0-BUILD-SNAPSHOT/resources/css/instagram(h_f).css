@@ -1,0 +1,156 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
+
+
+body {
+    margin: 0;
+    font-family: "Noto Sans KR", sans-serif;
+}
+.contents_area {
+    width: 100%;
+    max-width: 480px;
+    min-width: 280px;
+    margin: 0 auto;
+
+    height: 100%;
+    position: relative;
+}
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+#wrap{
+padding-top: 50px;
+}
+
+/* 헤더 */
+.haeder{
+    width: 100%;
+    max-width: 480px;
+    min-width: 280px;
+    margin: 0 auto;
+    height: 50px;
+
+    position: fixed;
+    left: 50%;
+    top: 0;
+    transform: translate(-50%);
+    z-index: 99;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0 10px;
+    box-sizing: border-box;
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+}  
+.header_logo {
+    width: 103px;
+    height: 30px;
+    /*background-image: url(../../../인스타그램/로고/로고3.png);*/
+    background-image: url(../img/로고3.png);
+    background-position: -121px 176px;
+    cursor: pointer;
+}
+.header_logo>a{
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+.ham_btn{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+.ham_line{
+    height: 3px;
+    width: 100%;
+    background-color: #000;
+}
+
+/* 햄판 */
+.hampan{
+    width: 100%;
+    height: 100vh;
+    background-color: #fff;
+    position: absolute;
+    left: -100%;
+    top: 0;
+    z-index: 999;
+
+    opacity: 0;
+    transition: all 0.6s;
+    
+    font-size: 17px;
+}
+.ham_top{
+    height: 51px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #a0a0a0;
+    padding: 0 20px;
+    box-sizing: border-box;
+    font-weight: 600;
+}
+.ham_close{
+    cursor: pointer;
+}
+.ham_menu{
+    display: flex;
+    align-items: center;
+    height: 60px;
+    border-bottom: 1px solid #ddd;
+    padding: 0 20px;
+    box-sizing: border-box;
+
+}
+.ham_img{
+    width: 50px;
+}
+.ham_desc{
+    cursor: pointer;
+}
+.logout, .login_icon{
+    width: 28px;
+    height: 28px;
+}
+.userdelete{
+    transform: rotate(45deg);
+}
+
+
+
+.ham_logo {
+    width: 103px;
+    height: 30px;
+    background-image: url(../img/로고3.png);
+    background-position: -121px 176px;
+    cursor: pointer;
+}
+.ham_logo>a{
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+/* 푸터 */
+.footer{
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: space-evenly;
+    font-size: 13px;
+    line-height: 50px;
+    
+}

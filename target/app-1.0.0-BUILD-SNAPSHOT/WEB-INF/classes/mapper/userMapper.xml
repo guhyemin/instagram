@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" ?>  <!-- 현재 파일이 XML 파일이기 때문에 맨 위에 XML 선언이 온다 -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/schema/mybatis-3-mapper.dtd"> <!-- 규칙을 정의한 DTD 선언 -->
+
+
+<mapper namespace="com.bitstudy.app.dao.UserMapper">
+
+    <!--  로그인용 ====> 자동로그인 해야하니가 변경..?-->
+    <!--  이건 사용자 (세션) 아이디 가져와서 사용자 정보 뽑아내는것 -->
+    <select id="selectUser" parameterType="String" resultType="UserDto">
+        select * from user_info where user_id=#{user_id}
+    </select>
+
+    <!--  로그인용 (로그인+자동로그인)  -->
+    <select id="selectLogin" parameterType="map" resultType="UserDto">
+        select * from user_info where user_id=#{user_id} and user_pw = #{user_pw}
+    </select>
+
+
+    <!--  비번찾기 전 확인하는 과정 -->
+    <select id="findPw" parameterType="map" resultType="String">
+        select user_id from user_info
+        where user_id=#{user_id} and user_name=#{user_name} and ph_num=#{ph_num}
+    </select>
+
+
+
+    <!--  비번 변경 -->
+    <update id="updatePw" parameterType="map">
+        update user_info
+        set user_pw = #{user_pw}
+        where user_id = #{user_id}
+    </update>
+
+
+    <!-- profile 이미지보여주기 위해 -->
+    <select id="findImg" parameterType="map" resultType="String">
+        select user_photo from user_info
+        where user_id=#{user_id}
+    </select>
+
+
+
+    <!--  회원가입용 -->
+    <insert id="insertUser" parameterType="UserDto">
+        insert into user_info values (null, #{user_id}, #{user_pw}, #{user_name}, #{ph_num}, #{gender}, null, null)
+    </insert>
+
+
+    <!--마이페이지 정보 업데이트-->
+    <update id="updateUser" parameterType="UserDto">
+        update user_info
+        set user_name = #{user_name} ,ph_num=#{ph_num}, gender=#{gender}, user_desc = #{user_desc}, user_photo = #{user_photo}
+        where user_id=#{user_id}
+    </update>
+
+    <!--회원탈퇴-->
+    <delete id="deleteUser" parameterType="String">
+        delete from user_info
+        where user_id=#{user_id}
+    </delete>
+
+    <!-- 서치용 검색하기 밑에 나상민 뜨는거-->
+    <select id="searchUser" parameterType="String" resultType="UserDto">
+        select * from user_info
+        where user_id like concat('%',#{keyword},'%') or user_name like concat('%',#{keyword},'%')
+    </select>
+    <!--검색창에 키워드 값 입력하면 그걸 받아서 검색해서 그걸 DTO담아서 보내주기 때문에 html의 input 태그 name = keyword로 되있음 그거 확인-->
+
+    <select id="user_img"  resultType="UserImgDto">
+        select user_photo,user_id from user_info
+    </select>
+
+    <select id="user_img_2" parameterType="String" resultType="String">
+        select user_photo from user_info
+        where user_id = #{Following_id}
+    </select>
+
+
+</mapper>

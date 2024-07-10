@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" ?>  <!-- 현재 파일이 XML 파일이기 때문에 맨 위에 XML 선언이 온다 -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/schema/mybatis-3-mapper.dtd"> <!-- 규칙을 정의한 DTD 선언 -->
+
+<mapper namespace="com.bitstudy.app.dao.FollowMapper">
+
+
+    <!--팔로워 = 해당 유저, 이 페이지의 유저를 팔로우하는 사람들-->
+    <select id="follower_count" parameterType="String" resultType="int">
+        select count(*) from follow
+        where following_id = #{user_id}
+    </select>
+
+    <!--나상민을 구혜민과 성경모가 팔로우하면
+    팔로워에 구혜민과 성경모가 생기고
+   그에 해당하는 팔로잉에 나상민이 생김 따라서 현재는 나상민의 팔로워는 2명임-->
+    <select id="following_count" parameterType="String" resultType="int">
+        select count(*) from follow
+        where follower_id = #{user_id}
+    </select>
+
+
+    <!--팔로워 == 누른 사람-->
+    <!-- 팔로잉 == 눌림 당한 사람-->
+
+    <!-- 내가 팔로워한사람 다 삭제   -->
+    <delete id="deleteMyfollower" parameterType="String">
+        delete from follow
+        where follower_id = #{user_id} or following_id = #{user_id}
+    </delete>
+
+
+    <!--내가 팔로워 하는사람 리스트 뽑을려고-->
+    <select id="followerList" parameterType="String" resultType="String">
+        select following_id from follow
+        where follower_id = #{user_id}
+    </select>
+
+    <!--  팔로우하기  -->
+    <insert id="inserFollow" parameterType="FollowDto">
+        insert into follow
+        values
+        (null, #{follower_id}, #{following_id})
+    </insert>
+
+<!-- 팔로우 취소 -->
+    <delete id="deleteFollow" parameterType="FollowDto">
+        delete from follow
+        where following_id = #{following_id} and follower_id = #{follower_id}
+    </delete>
+
+<!--  팔로우 했는지 안했는지 확인   -->
+    <select id="selectFollow" parameterType="FollowDto" resultType="FollowDto">
+        select * from follow
+        where following_id = #{following_id} and follower_id = #{follower_id}
+    </select>
+
+
+
+
+
+</mapper>

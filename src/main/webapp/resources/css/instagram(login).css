@@ -1,0 +1,145 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
+
+
+body {
+    margin: 0;
+    font-family: "Noto Sans KR", sans-serif;
+}
+.contents_area {
+    width: 100%;
+    max-width: 480px;
+    min-width: 280px;
+    margin: 100px auto 0 auto;
+
+    height: 100%;
+    position: relative;
+    text-align: center;
+}
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+#wrap{
+    /* border: 1px solid rgba(0, 0, 0, 0.3); */
+}
+
+
+
+
+.logo{
+    background-image: url(https://static.cdninstagram.com/rsrc.php/v3/yM/r/8n91YnfPq0s.png);
+    background-position: 0px -52px;
+    width: 175px;
+    height: 51px;
+    margin: 45px auto;
+    cursor: pointer;
+}
+.error{
+    color: red;
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.id,.password
+{
+    width: 80%;
+    height: 40px;
+    outline: none;
+    margin-bottom: 10px;
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+.login{
+    margin: 0 auto;
+    width: 80%;
+    height: 35px;
+    text-align: center;
+    line-height: 35px;
+    color: #f8f8f8;
+    background-color: rgb(76 181 249);
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+}
+.orbox{
+    margin: 30px auto;
+    width: 80%;
+    height: 30px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+}
+.orbox_line{
+    width: 38%;
+    height: 2px;
+    background-color: #ddd;
+}
+.facebook_box{
+    width: 100%;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+.facebook_icon{
+    width: 16px;
+    height: 16px;
+    background-image: url(../img/로고3.png);
+        background-size: 440px 411px;
+        background-position: -424px -266px;
+}
+.facebook_text{
+    color: rgb(10, 155, 252);
+    font-size: 14px;
+    cursor: pointer;
+}
+.loss_passwrad{
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    font-size: 13px;
+    cursor: pointer;
+}
+.loss_passwrad>span{
+    color: rgb(76 181 249);
+    font-weight: 600;
+}
+
+.getid{
+    margin: 100px auto;
+    font-size: 14px;
+}
+
+.getid>span{
+    color: rgb(76 181 249);
+    font-weight: 600;
+}
+
+
+
+
+
+
+
+/* 푸터 */
+.footer{
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: space-evenly;
+    font-size: 13px;
+    line-height: 50px;
+    
+}

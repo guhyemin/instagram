@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8" ?>  <!-- 현재 파일이 XML 파일이기 때문에 맨 위에 XML 선언이 온다 -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/schema/mybatis-3-mapper.dtd"> <!-- 규칙을 정의한 DTD 선언 -->
+
+<mapper namespace="com.bitstudy.app.dao.CommentMapper">
+
+    <!-- 댓글 삭제하기 -->
+    <delete id="comment_delete" parameterType="map">
+        delete from comment where C_seqno = #{C_seqno} and
+        C_writer = #{C_writer}
+    </delete>
+
+    <!-- 내가 쓴 댓글 모두 삭제하기 -->
+    <delete id="deleteMyComment" parameterType="String">
+        delete from comment
+        where C_writer = #{C_write}
+    </delete>
+
+    <!-- 게시물에 댓글 등록하기 -->
+    <insert id="comment_insert" parameterType="CommentDto">
+        insert into comment
+        values
+        (null,#{FK_A_seqno}, #{C_writer}, #{C_txt}, default, #{C_class}, #{C_group_num}, 0)
+    </insert>
+
+    <!-- 댓글 수정하기 -->
+    <update id="comment_update" parameterType="CommentDto">
+        update comment
+        set C_txt = #{C_txt}
+        where C_seqno = #{C_seqno} and C_writer=#{C_writer}
+    </update>
+
+
+    <!-- 게시물의 댓글 전체 다 불러오기(총 수) -->
+    <select id="comment_count" parameterType="int" resultType="int">
+        select count(*) from comment where FK_A_seqno = #{FK_A_seqno}
+    </select>
+
+
+    <!-- 댓글 유저 정보 합쳐서 부모 댓글만 들고오기 -->
+    <select id="comment_user" parameterType="int" resultType="CommentDto">
+        select c.*,u.user_photo as userPhoto from (select * from comment where FK_A_seqno = #{FK_A_seqno} and C_class = 0 ) as c
+        left join (select user_id, user_photo from user_info) as u
+        on c.C_writer = u.user_id
+    </select>
+
+
+    <!-- 댓글 유저 정보 합쳐서 부모 자식 댓글만 들고오기  ajax 써서 들고올 예정 -->
+    <!--  이건 부모의 그룹까지 들고와야 할거같음. 변경 예상  -->
+    <select id="comment_c" parameterType="map" resultType="CommentDto">
+        select c.*,u.user_photo as userPhoto from (select * from comment where FK_A_seqno = #{FK_A_seqno} and C_class = 1 and C_group_num = #{C_group_num}) as c
+        left join (select user_id, user_photo from user_info) as u
+        on c.C_writer = u.user_id
+    </select>
+
+
+    <!-- 탈퇴시 내 게시물에 대한 댓글 삭제-->
+    <delete id="MyArticleComment" parameterType="String">
+        delete from comment
+        using article
+        left join comment
+        on article.A_seqno = comment.FK_A_seqno
+        where article.A_writer = #{user_id};
+    </delete>
+
+
+    <!-- 댓글 수 뽑아오기 -->
+    <select id="commentCount" resultType="CommentCountDto">
+        select FK_A_seqno, count(*) as C_count from comment
+        group by FK_A_seqno
+    </select>
+
+    <!-- 댓글 수 하나 뽑아오기 -->
+    <select id="countOne" parameterType="int" resultType="CommentCountDto">
+        select FK_A_seqno, count(*) as C_count from comment
+        where FK_A_seqno=#{FK_A_seqno}
+    </select>
+
+
+    <!--  아티클 그룹번호 뽑아오기  -->
+    <select id="getGroup" parameterType="int" resultType="int">
+        select C_group_num from comment
+        where FK_A_seqno = ${FK_A_seqno} and C_class=0
+        order by C_group_num desc
+        limit 0,1
+    </select>
+
+    <!-- 댓글 정보 뽑아오기 -->
+    <select id="selectComment" parameterType="int" resultType="CommentDto">
+        select * from comment
+        where C_seqno =#{C_seqno}
+    </select>
+
+    <!-- 부모 댓글지울때 자식 까지 다 지우기 -->
+    <delete id="parentdelete" parameterType="map">
+        delete from comment
+        where FK_A_seqno = #{FK_A_seqno} and C_group_num =#{C_group_num}
+    </delete>
+
+</mapper>

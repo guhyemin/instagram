@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8" ?>  <!-- 현재 파일이 XML 파일이기 때문에 맨 위에 XML 선언이 온다 -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/schema/mybatis-3-mapper.dtd"> <!-- 규칙을 정의한 DTD 선언 -->
+
+<mapper namespace="com.bitstudy.app.dao.ArticleMapper">
+
+
+<!--주의 터지면 여기임, 터지면 default를 now()로 바꿔야됨 -->
+<insert id="madeArticle" parameterType="ArticleDto">
+    insert into article values
+    (null, #{A_writer}, #{A_contents}, #{A_img}, default, "", default, default)
+</insert>
+
+
+    <!--여기서의 들어가서 상세 보고 싶은 아이디 a태그에 걸리는 name에 들어가는 아이디-->
+    <!--  이거 안쓸거 같은데...   -->
+<select id="search_article" parameterType="String" resultType="ArticleDto">
+    select * from article
+    where A_writer = #{A_writer}
+</select>
+
+
+<!-- 탈퇴시 게시물 지우는거-->
+<delete id="deleteArticle" parameterType="String">
+    delete from article
+    where A_writer = #{A_writer}
+</delete>
+
+
+<!--  내가 쓴 게시물 한개 삭제하기  -->
+<delete id="d_delete" parameterType="map">
+    delete from article where A_seqno = #{A_seqno} and A_writer = #{A_writer}
+</delete>
+
+
+<!--  메인페이지 리스트 뽑기 !!  -->
+    <select id="main_article" parameterType="map" resultType="ArticleDto">
+
+        select * from (select * from article as aa
+        left join (select FK_A_seqno, H_writer as H_condition from heart where H_writer = #{user_id}) as h
+        on aa.A_seqno = h.FK_A_seqno) as ah
+        left join user_info as u
+        on ah.A_writer = u.user_id
+        where false
+        <foreach collection="Following_id" item="id" >
+            or A_writer = #{id}
+        </foreach>
+        order by A_reg_date desc
+    </select>
+
+
+    <!-- 내가 하트 누른 게시물 불러오기 -->
+    <select id="user_heartArticle" parameterType="String" resultType="ArticleDto">
+        select * from (select FK_A_seqno as A_seqno from heart where H_writer = #{H_writer})as hh
+        left join article as aa
+        on hh.A_seqno = aa.A_seqno
+    </select>
+
+    <!-- 상세페이지에 있는 사람 게시물 들고오기 *** 하트누른사람이랑 상세페이지 있는사람 달라서 map으로 받아옴-->
+    <select id="user_Article" parameterType="map" resultType="ArticleDto">
+        select aa.*, h.H_writer  as H_condition  from (select * from article where A_writer = #{A_writer}) as aa
+        left join (select FK_A_seqno, H_writer from heart where H_writer = #{user_id}) as h
+        on aa.A_seqno = h.FK_A_seqno
+        order by A_reg_date desc
+    </select>
+
+
+    <!-- 게시물 총 수 구하기 이건 쓸지 안쓸지 의문 -->
+    <select id="article_count" parameterType="String" resultType="int">
+        select count(*) from article where A_writer = #{A_writer}
+    </select>
+
+    <!--  아티클 그룹번호 뽑아오기  -->
+    <select id="getGroup" parameterType="int" resultType="int">
+        select C_group_num from comment
+        where FK_A_seqno = ${FK_A_seqno} and C_class=0
+        order by C_group_num desc
+        limit 0,1
+    </select>
+
+
+    <!--  업데이트  -->
+    <update id="heartCountUpdate" parameterType="HeartDto">
+        update article set A_Heart = #{H_count}
+        where A_seqno = #{FK_A_seqno}
+    </update>
+
+    <update id="commentCountUpdate" parameterType="CommentCountDto">
+        update article set A_comment = #{C_count}
+        where A_seqno = #{FK_A_seqno}
+    </update>
+
+
+    <!--만약 안나오면 join해! 위에 참조-->
+    <update id="userImgUpdate" parameterType="UserImgDto">
+        UPDATE article AS a
+        JOIN user_info AS ui ON a.A_writer = ui.user_id
+        SET a.A_userPhoto = ui.user_photo
+        WHERE a.A_writer = #{user_id};
+    </update>
+
+
+
+</mapper>

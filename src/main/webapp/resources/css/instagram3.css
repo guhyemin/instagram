@@ -1,0 +1,103 @@
+.main{
+    width: 100%;
+}
+.item_box{
+    margin-top: 20px;
+    width: 100%;
+    height: 90vh;
+    position: relative;
+}
+.imgbox{
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    position: relative;
+}
+.imgbox>img{
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.imgbox_bot{
+    width: 100%;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    padding: 20px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+.profile{
+    color: #fff;
+    display: flex;
+    align-items: center;
+    height: 40px;
+    gap: 10px;
+    
+}
+.profile_img{
+    cursor: pointer;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    overflow: hidden;
+}
+.profile_img>img{
+    width: 100%;
+}
+.name{
+    cursor: pointer;
+}
+.follow{
+    width: 60px;
+    height: 30px;
+    border: 1px solid;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 30px;
+    cursor: pointer;
+}
+.title{
+    color: #fff;
+}
+.activebox{
+    width: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    color: #fff;
+}
+.pluse{
+    height: 20px;
+    line-height: 20px;
+    margin-bottom: 40px;
+    cursor: pointer;
+}
+
+.like_count,
+.comment_count,
+.send,
+.save{
+margin-bottom: 20px;
+}
+.like_icon,
+.comment_icon,
+.send,
+.save{
+    cursor: pointer;
+    
+}
+
+
+
+.xxk16z8{
+    fill: red;
+    display: none;
+    }
+    

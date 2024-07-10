@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <typeAliases>
+        <typeAlias alias="ArticleDto" type="com.bitstudy.app.domain.ArticleDto"/>
+        <typeAlias alias="CommentDto" type="com.bitstudy.app.domain.CommentDto"/>
+        <typeAlias alias="FollowDto" type="com.bitstudy.app.domain.FollowDto"/>
+        <typeAlias alias="HeartDto" type="com.bitstudy.app.domain.HeartDto"/>
+        <typeAlias alias="UserDto" type="com.bitstudy.app.domain.UserDto"/>
+        <typeAlias alias="UserImgDto" type="com.bitstudy.app.domain.UserImgDto"/>
+        <typeAlias alias="CommentCountDto" type="com.bitstudy.app.domain.CommentCountDto"/>
+    </typeAliases>
+</configuration>

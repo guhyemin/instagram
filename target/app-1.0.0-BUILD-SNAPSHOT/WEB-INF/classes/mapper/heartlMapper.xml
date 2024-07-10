@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>  <!-- 현재 파일이 XML 파일이기 때문에 맨 위에 XML 선언이 온다 -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/schema/mybatis-3-mapper.dtd"> <!-- 규칙을 정의한 DTD 선언 -->
+
+<mapper namespace="com.bitstudy.app.dao.HeartMapper">
+
+    <!--  내가 좋아요 누른거 다 삭제  -->
+    <delete id="deleteMyLike" parameterType="String">
+        delete from heart
+        where H_writer = #{user_id}
+    </delete>
+
+    <!-- 하트 하나 삭제 -->
+    <delete id="deleteLikeOne" parameterType="map">
+        delete from heart
+        where H_writer = #{H_writer} and FK_A_seqno = #{FK_A_seqno}
+    </delete>
+
+
+    <!--    하트 누르면  -->
+    <insert id="insertMyLike" parameterType="map">
+        insert into heart
+        values
+        (null, #{FK_A_seqno}, #{H_writer})
+    </insert>
+
+
+    <!--탈퇴시 내 게시물에 대한 하트 삭제-->
+    <delete id="MyArticleHeart" parameterType="String">
+        delete from heart
+        using article
+        left join heart
+        on article.A_seqno = heart.FK_A_seqno
+        where article.A_writer = #{user_id};
+    </delete>
+
+
+    <!--하트 게시물별 하트갯수 뽑아오기-->
+    <select id="heartCount" resultType="HeartDto">
+        select FK_A_seqno, count(*) as H_count from heart
+        group by FK_A_seqno
+    </select>
+
+    <!--하트 게시물별 하트갯수 뽑아오기-->
+    <select id="heartCountOne" parameterType="int" resultType="HeartDto">
+        select FK_A_seqno, count(*) as H_count from heart
+        where FK_A_seqno = #{A_seqno}
+    </select>
+
+
+
+    <!-- 그사람이 하트 눌렀는지 확인 -->
+    <select id="heartSelect" parameterType="map" resultType="heartDto">
+        select * from heart
+        where H_writer = #{id} and FK_A_seqno = #{A_seqno}
+    </select>
+
+</mapper>
