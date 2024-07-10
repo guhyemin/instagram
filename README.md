@@ -102,7 +102,8 @@ instagram 리모델링
 ![11](https://github.com/99nsm/instagram/assets/166674058/a40d1a6e-8781-4622-8417-55d7a328caca)
 
 ## 📎기타 자료 
-[instagram_ppt.pdf](https://github.com/user-attachments/files/16157134/instagram_ppt.pdf)
+[instagram_ppt.pdf](https://github.com/user-attachments/files/16159074/instagram_ppt.pdf)
+
 
 
 데이터 베이스 생성 및 테이블 생성 쿼리문
