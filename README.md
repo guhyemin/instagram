@@ -9,11 +9,9 @@ instagram 리모델링
 ## 📆 개발기간
 + 2024.06.28 ~ 07.04(7일) 
 
-## 👫 역할분담
-+ 나상미(프론트엔드) : 로그인, 회원가입, 메인, 상세, 서치 페이지 구현
-+ 조다영(백엔드) : 로그인, 메인 페이지 기능 구현
+## 👫 맡은 역활
 + 구혜민(백엔드) : 회원가입, 마이페이지, 게시물 만들기, 서치 페이지 기능 구현
-+ 박서영(프론트엔드) : 상세 페이지 기능 구현
+
 
 ## 📝 개발언어
 <div style="display:flex; flex-direction:column; align-items:flex-start;">
@@ -59,9 +57,111 @@ instagram 리모델링
 + 상세 페이지 : 사용자 프로필 사진 등 팔로우 및 게시글 관련 정보 노출
 + 게시물 만들기 페이지 : 게시글 작성 기능
 + 마이 페이지 : 현재 로그인한 사용자 정보 변경 가능
+  
 
+## 📎이미지
+
+로그인 페이지
+
+![1](https://github.com/99nsm/instagram/assets/166674058/98e0cde3-c3fd-4b20-a5fe-405b6f83bc0d)
+
+회원가입 페이지
+
+![2](https://github.com/99nsm/instagram/assets/166674058/5d95786c-d59e-4a2d-9c42-2afb0d9d0c2a)
+
+비밀번호 찾기 페이지
+
+![4](https://github.com/99nsm/instagram/assets/166674058/c08350a1-8ada-45aa-8dc3-1d2e238ec96e)
+
+메인 페이지
+
+![5](https://github.com/99nsm/instagram/assets/166674058/002a2bae-67fa-4185-b719-bc4581cdd1f4)
+
+햄버거 버튼
+
+![6](https://github.com/99nsm/instagram/assets/166674058/b4fd805e-5f3b-4aea-91ff-7f488411900f)
+
+검색 페이지
+
+![7](https://github.com/99nsm/instagram/assets/166674058/c93aec4a-233e-4d57-9056-10570326c848)
+
+상세 페이지
+
+![8](https://github.com/99nsm/instagram/assets/166674058/eee1edc3-1a52-4f68-80c7-cd6bb2737c48)
+
+만들기 페이지
+
+![9](https://github.com/99nsm/instagram/assets/166674058/9aa98f90-dab5-49d0-abe2-f6c885fd9e7b)
+
+회원정보 수정 페이지
+
+![10](https://github.com/99nsm/instagram/assets/166674058/a2eccdb5-c9aa-4c14-988b-db6be55b71a5)
+
+댓글 및 답글
+
+![11](https://github.com/99nsm/instagram/assets/166674058/a40d1a6e-8781-4622-8417-55d7a328caca)
 
 ## 📎기타 자료 
-[Uploading Re-meet_발표자료.pdf…]()
+[instagram_ppt.pdf](https://github.com/user-attachments/files/16157134/instagram_ppt.pdf)
 
-!! 여기 추가할것 Sql문
+
+데이터 베이스 생성 및 테이블 생성 쿼리문
+
+create database instagram;
+
+use instagram;
+
+create table user_info (
+                           U_seqno int auto_increment,
+                           user_id varchar(50) not null unique,
+                           user_pw varchar(50) not null,
+                           user_name varchar(50) not null,
+                           ph_num varchar(50) not null,
+                           gender int(10) not null,
+                           user_desc varchar(255),
+                           user_photo varchar(255),
+                           primary key(U_seqno)
+);
+
+create table follow (
+                        F_seqno int auto_increment,
+                        follower_id varchar(255) not null,
+                        following_id varchar(255) not null,
+                        primary key(F_seqno)
+);
+
+create table article (
+                         A_seqno int auto_increment,
+                         A_writer varchar(255) not null,
+                         A_contents varchar(255) not null,
+                         A_img varchar(255),
+                         A_reg_date datetime default now(),
+                         A_userPhoto varchar(255),
+                         A_Heart int default 0,
+                         A_comment int default 0,
+                         primary key(A_seqno)
+);
+
+create table heart (
+                       H_seqno int auto_increment,
+                       FK_A_seqno int not null,
+                       H_writer varchar(255) not null,
+                       primary key(H_seqno)
+);
+
+create table comment (
+                         C_seqno int auto_increment,
+                         FK_A_seqno int not null,
+                         C_writer varchar(255) not null,
+                         C_txt varchar(255) not null,
+                         C_reg_date datetime default now(),
+                         C_class int(10) not null,
+                         C_group_num int(10) not null,
+                         C_order nt(10) not null,
+                         primary key(C_seqno)
+);
+
+직접 수정해야 할 코드
+MypageController, ArticleController 에 있는 이미지 업로드하고 다운받는 경로 수정해야합니다
+
+ex) private static final String F_PATH = "C:/Users/user1/OneDrive/바탕 화면/tp_instagram/instagram/src/main/webapp/resources/img/";
