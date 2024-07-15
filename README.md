@@ -158,7 +158,7 @@ create table comment (
                          C_reg_date datetime default now(),
                          C_class int(10) not null,
                          C_group_num int(10) not null,
-                         C_order nt(10) not null,
+                         C_order int(10) not null,
                          primary key(C_seqno)
 );
 
